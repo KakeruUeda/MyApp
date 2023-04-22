@@ -1,0 +1,32 @@
+<div>
+  <%= image_tag @letter.get_image, size: '400x500', class: 'image'%>
+  <p>説明：<%= @letter.caption %></p>
+  <p>ユーザーネーム：<%= @letter.user.user_name %></p>
+  <p>投稿日：<%= @letter.created_at.strftime('%Y/%m/%d') %></p>
+</div>
+  
+<%= form_with model:[@letter, @letter_comment], local: true, url: public_letter_letter_comments_path(@letter) do |f| %>
+  <%= f.text_area :comment, rows:'5', class: "w-100" %>
+  <%= f.submit "送信", class: "btn btn-outline-dark btn-base-1 mt-20 pull-right" %>
+<% end %>
+
+<table>
+  <tbody>
+      <% @letter.letter_comments.each do |letter_comment| %>
+      <tr>
+        
+        <td>
+          <%= link_to public_user_path(letter_comment.user) do %>
+            <%= letter_comment.user.user_name %>
+          <% end %>
+        </td>
+        <td><%= letter_comment.comment %></td>
+        <td>
+          <% if letter_comment.user == current_user %>
+            <%= link_to "Destroy", public_letter_letter_comment_path(@letter, letter_comment), method: :delete, class: "btn btn-danger pull-right" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

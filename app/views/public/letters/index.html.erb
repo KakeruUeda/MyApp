@@ -1,0 +1,9 @@
+<div class="row">
+  <% @letters.each do |letter| %>
+    <div class="col-md-2">
+      <p><%= image_tag letter.get_image, size: '400x500', class: 'image' %></p>
+      <p>説明：<%= letter.caption %></p>
+      <p>ユーザーネーム：<%= letter.user.user_name %></p>
+    </div>
+  <% end %>
+</div>
